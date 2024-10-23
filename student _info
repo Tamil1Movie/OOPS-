@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+class Student
+{
+	private:
+		int reg_no,i,n;
+		char name[20];
+		int marks[5];
+		float a;
+	public:
+		void get();
+}s;
+void Student::get(){
+    int sum=0,avg;
+	cout<<"STUDENT INFORMATION SYSTEM:"<<endl;
+	cout<<"Enter no of students:"<<endl;
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+		cout<<"Enter Register number:";
+		cin>>s.reg_no;
+		cout<<"Enter Name:";
+		cin>>s.name;
+	}
+	cout<<"Enter 5 subject marks:"<<endl;
+	for(int i=0;i<5;++i)
+	{
+		cin>>marks[i];
+	}
+	for(i=0;i<5;i++)
+	{
+	    sum=sum+marks[i];
+	}
+	avg=sum/5;
+	for(i=0;i<n;i++){
+	cout<<"\nStudent"<<i+1;
+	cout<<"\nRegister name:"<<s.reg_no;
+	cout<<"\nName:"<<s.name;
+	}
+	cout<<"Marks:"<<s.marks;
+	cout<<"Average:"<<avg;
+}
+int main()
+{
+    Student s;
+    s.get();
+    return 0;
+}
