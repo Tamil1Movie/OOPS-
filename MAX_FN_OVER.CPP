@@ -29,3 +29,6 @@ int main()
     m.max(15.3,20.3,56.3);
     return 0;
 }
+OUTPUT
+100 is greater
+56.3 is greater
