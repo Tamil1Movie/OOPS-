@@ -29,3 +29,6 @@ int main()
     m.min(21.5,46.7,18.7);
     return 0;
 }
+OUTPUT
+16 is minimum
+18.7 is minimum
