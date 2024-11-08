@@ -1,0 +1,407 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class: Student
+class Student {
+protected:
+    string name;
+    int rollNo;
+
+public:
+    // Constructor to initialize basic student information
+    Student(string n, int r) : name(n), rollNo(r) {}
+
+    // Method to display student information
+    void displayInfo() {
+        cout << "Name: " << name << endl;
+        cout << "Roll No: " << rollNo << endl;
+    }
+};
+
+// Derived class: Result
+class Result : public Student {
+private:
+    int marks[5];    // Array to hold marks of 5 subjects
+    int totalMarks;
+    char grade;
+
+public:
+    // Constructor to initialize Student and Result data
+    Result(string n, int r, int m[]) : Student(n, r), totalMarks(0), grade('F') {
+        for (int i = 0; i < 5; i++) {
+            marks[i] = m[i];
+            totalMarks += marks[i];
+        }
+        calculateGrade();
+    }
+
+    // Method to calculate grade based on total marks
+    void calculateGrade() {
+        float percentage = (totalMarks / 500.0) * 100;
+        if (percentage >= 90) grade = 'A';
+        else if (percentage >= 75) grade = 'B';
+        else if (percentage >= 50) grade = 'C';
+        else grade = 'F';
+    }
+
+    // Method to display result details
+    void displayResult() {
+        displayInfo();
+        cout << "Total Marks: " << totalMarks << "/500" << endl;
+        cout << "Grade: " << grade << endl;
+    }
+};
+
+int main() {
+    int marks[5] = {85, 90, 78, 88, 92}; // Sample marks for 5 subjects
+    Result studentResult("John Doe", 101, marks);
+
+    studentResult.displayResult();
+
+    return 0;
+}
+2.#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class: BasicInfo
+class BasicInfo {
+protected:
+    int employeeID;
+    string name;
+    string gender;
+
+public:
+    // Constructor for BasicInfo
+    BasicInfo(int id, string n, string g) : employeeID(id), name(n), gender(g) {}
+
+    // Method to display basic employee information
+    void displayBasicInfo() const {
+        cout << "Employee ID: " << employeeID << endl;
+        cout << "Employee Name: " << name << endl;
+        cout << "Gender: " << gender << endl;
+    }
+};
+
+// Base class: DepartmentInfo
+class DepartmentInfo {
+protected:
+    string departmentName;
+    int departmentNumber;
+
+public:
+    // Constructor for DepartmentInfo
+    DepartmentInfo(string deptName, int deptNum) : departmentName(deptName), departmentNumber(deptNum) {}
+
+    // Method to display department information
+    void displayDepartmentInfo() const {
+        cout << "Department Name: " << departmentName << endl;
+        cout << "Department Number: " << departmentNumber << endl;
+    }
+};
+
+// Derived class: Employee
+class Employee : public BasicInfo, public DepartmentInfo {
+private:
+    string assignedWork;
+    int timeToComplete; // in hours
+
+public:
+    // Constructor for Employee, calling constructors of BasicInfo and DepartmentInfo
+    Employee(int id, string n, string g, string deptName, int deptNum, string work, int time)
+        : BasicInfo(id, n, g), DepartmentInfo(deptName, deptNum), assignedWork(work), timeToComplete(time) {}
+
+    // Method to display all employee information
+    void displayEmployeeInfo() const {
+        displayBasicInfo();
+        displayDepartmentInfo();
+        cout << "Assigned Work: " << assignedWork << endl;
+        cout << "Time to Complete: " << timeToComplete << " hours" << endl;
+    }
+};
+
+int main() {
+    // Create an Employee object with sample data using the constructor
+    Employee emp(1001, "Alice Smith", "Female", "IT", 101, "Develop software module", 20);
+
+    // Display all information about the employee
+    emp.displayEmployeeInfo();
+
+    return 0;
+}
+3.
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class
+class EmployeeBase {
+protected:
+    int employee_id;          // Employee ID
+    string employee_name;     // Employee Name
+    string gender;            // Gender
+
+public:
+    EmployeeBase(int id, string name, string gen)
+        : employee_id(id), employee_name(name), gender(gen) {}
+};
+
+// Derived class for basic employee information
+class BasicInfo : virtual public EmployeeBase {
+public:
+    BasicInfo(int id, string name, string gen)
+        : EmployeeBase(id, name, gen) {}
+
+    void displayBasicInfo() const {
+        cout << "Employee ID: " << employee_id << endl;
+        cout << "Employee Name: " << employee_name << endl;
+        cout << "Gender: " << gender << endl;
+    }
+};
+
+// Derived class for department-related information
+class DepartmentInfo : virtual public EmployeeBase {
+protected:
+    string department_name;   // Department Name
+    int department_number;     // Department Number
+    string assigned_work;      // Assigned Work
+    int time_to_complete;      // Time to Complete
+
+public:
+    DepartmentInfo(string deptName, int deptNum, string work, int time, int id, string name, string gen)
+        : EmployeeBase(id, name, gen), department_name(deptName), department_number(deptNum), assigned_work(work), time_to_complete(time) {}
+
+    void displayDepartmentInfo() const {
+        cout << "Department Name: " << department_name << endl;
+        cout << "Department Number: " << department_number << endl;
+        cout << "Assigned Work: " << assigned_work << endl;
+        cout << "Time to Complete: " << time_to_complete << " hours" << endl;
+    }
+};
+
+// Final derived class that combines both BasicInfo and DepartmentInfo
+class Employee : public BasicInfo, public DepartmentInfo {
+public:
+    Employee(int id, string name, string gen, string deptName, int deptNum, string work, int time)
+        : BasicInfo(id, name, gen), DepartmentInfo(deptName, deptNum, work, time, id, name, gen) {}
+
+    void displayEmployeeInfo() const {
+        displayBasicInfo();
+        displayDepartmentInfo();
+    }
+};
+
+int main() {
+    // Creating an Employee object
+    Employee emp(101, "John Doe", "Male", "Engineering", 202, "Software Development", 40);
+
+    // Displaying employee information
+    emp.displayEmployeeInfo();
+
+    return 0;
+}
+4.
+#include <iostream>
+using namespace std;
+
+// First base class
+class Base1 {
+protected:
+    int A;  // Value of A
+
+public:
+    Base1(int a) : A(a) {}
+
+    void displayA() const {
+        cout << "Value of A: " << A << endl;
+    }
+};
+
+// Second base class (derived from Base1)
+class Base2 : public Base1 {
+protected:
+    int B;  // Value of B
+
+public:
+    Base2(int a, int b) : Base1(a), B(b) {}
+
+    void displayB() const {
+        cout << "Value of B: " << B << endl;
+    }
+};
+
+// Derived class (derived from Base2)
+class Derived : public Base2 {
+private:
+    int C;  // Sum of A and B
+
+public:
+    Derived(int a, int b) : Base2(a, b), C(a + b) {}
+
+    void displayC() const {
+        cout << "Value of C (A + B): " << C << endl;
+    }
+};
+
+int main() {
+    // Creating a Derived object
+    Derived obj(10, 20);
+
+    // Display values of A, B, and C
+    obj.displayA();
+    obj.displayB();
+    obj.displayC();
+
+    return 0;
+}
+5.
+#include <iostream>
+using namespace std;
+
+// Base class to hold a number
+class Number {
+protected:
+    int num;
+
+public:
+    Number(int n) : num(n) {}
+
+    void displayNumber() const {
+        cout << "Number: " << num << endl;
+    }
+};
+
+// Derived class to calculate the square of the number
+class Square : public Number {
+public:
+    Square(int n) : Number(n) {}
+
+    void displaySquare() const {
+        cout << "Square of " << num << " is: " << (num * num) << endl;
+    }
+};
+
+// Derived class to calculate the cube of the number
+class Cube : public Number {
+public:
+    Cube(int n) : Number(n) {}
+
+    void displayCube() const {
+        cout << "Cube of " << num << " is: " << (num * num * num) << endl;
+    }
+};
+
+int main() {
+    int value = 5;
+
+    // Creating objects of derived classes
+    Square squareObj(value);
+    Cube cubeObj(value);
+
+    // Display results
+    squareObj.displayNumber();
+    squareObj.displaySquare();
+    
+    cubeObj.displayNumber();
+    cubeObj.displayCube();
+
+    return 0;
+}
+6.
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class for basic employee information
+class EmployeeInfo {
+protected:
+    int employee_id;
+    string employee_name;
+
+public:
+    EmployeeInfo(int id, string name)
+        : employee_id(id), employee_name(name) {}
+
+    void displayEmployeeInfo() const {
+        cout << "Employee ID: " << employee_id << endl;
+        cout << "Employee Name: " << employee_name << endl;
+    }
+};
+
+// Base class for basic salary information
+class SalaryInfo {
+protected:
+    double basic_salary;
+
+public:
+    SalaryInfo(double salary)
+        : basic_salary(salary) {}
+
+    void displayBasicSalary() const {
+        cout << "Basic Salary: " << basic_salary << endl;
+    }
+};
+
+// Derived class for calculating gross and net salary
+class SalaryCalculation : public EmployeeInfo, public SalaryInfo {
+protected:
+    double allowance;
+    double loan_deduction;
+    double gross_salary;
+    double net_salary;
+
+public:
+    SalaryCalculation(int id, string name, double salary, double allowance, double loan)
+        : EmployeeInfo(id, name), SalaryInfo(salary), allowance(allowance), loan_deduction(loan) {
+        calculateGrossSalary();
+        calculateNetSalary();
+    }
+
+    void calculateGrossSalary() {
+        gross_salary = basic_salary + allowance;
+    }
+
+    void calculateNetSalary() {
+        double tax = calculateTax(gross_salary);
+        net_salary = gross_salary - tax - loan_deduction;
+    }
+
+    double calculateTax(double salary) {
+        if (salary < 200000) return 0;
+        if (salary <= 500000) return 0.1 * salary;
+        if (salary <= 1000000) return 0.2 * salary;
+        return 0.3 * salary; // 30% tax if salary exceeds 10 lakhs
+    }
+
+    void displaySalaryDetails() const {
+        cout << "Gross Salary: " << gross_salary << endl;
+        cout << "Loan Deduction: " << loan_deduction << endl;
+        cout << "Net Salary: " << net_salary << endl;
+    }
+};
+
+int main() {
+    // Employee data
+    int id = 101;
+    string name = "Alice Johnson";
+    double basic_salary = 450000;
+    double allowance = 50000;
+    double loan_deduction = 30000;
+
+    // Create SalaryCalculation object
+    SalaryCalculation employee(id, name, basic_salary, allowance, loan_deduction);
+
+    // Display information
+    employee.displayEmployeeInfo();
+    employee.displayBasicSalary();
+    employee.displaySalaryDetails();
+
+    return 0;
+}
+
+
+
+
+
+
