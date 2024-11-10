@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+class base
+{
+    public:
+        virtual void print()
+        {
+            cout<<"Inside baseclass" <<endl;
+        }
+        void display()
+        {
+            cout<<"inside base class"<<endl;
+        }
+};
+class derived:public base
+{
+    public:
+        void print () override
+        {
+            cout<<"Inside Derived class"<<endl;
+        }
+};
+int main() {
+    base *bp;
+    base b;
+    derived d;
+    bp=&b;
+    bp->print();
+    bp=&d;
+    bp->print();
+    b.display();
+    return 0;
+}
+
+Inside baseclass
+Inside Derived class
+inside base class
